@@ -27,6 +27,7 @@ import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 
 
+
 //comment: make sure you go through this code and understand it
 public class MineFreqItems extends Configured implements Tool {
 	public static class TokenizerMapperA extends Mapper<Object, Text, Text, IntWritable> {
