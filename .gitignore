@@ -1,1 +1,6 @@
-preprocessed_spotify_data.txt
+#ignore everything
+*
+
+#but not these
+!MineFreqItems.java
+!TenLengthPlaylists.java
