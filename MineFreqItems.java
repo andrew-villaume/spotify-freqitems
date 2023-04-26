@@ -28,7 +28,7 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 
 
 //comment: make sure you go through this code and understand it
-public class JoinRatings extends Configured implements Tool {
+public class MineFreqItems extends Configured implements Tool {
 	public static class TokenizerMapperA extends Mapper<Object, Text, Text, IntWritable> {
 		private Text node1;
 		private IntWritable zero = new IntWritable(0);
@@ -105,7 +105,7 @@ public class JoinRatings extends Configured implements Tool {
 		//ToolRunner allows for command line configuration parameters - suitable for shifting between local job and yarn
 		// example command: hadoop jar <path_to_jar.jar> <main_class> -D param=value <input_path> <output_path>
 		//We use -D mapreduce.framework.name=<value> where <value>=local means the job is run locally and <value>=yarn means using YARN 
-		int res = ToolRunner.run(new Configuration(), new JoinRatings(), args);
+		int res = ToolRunner.run(new Configuration(), new MineFreqItems(), args);
         System.exit(res);
     }
 
@@ -114,9 +114,9 @@ public class JoinRatings extends Configured implements Tool {
    		//Configuration conf = new Configuration();
 		Configuration conf = this.getConf();
 		Job job = Job.getInstance(conf, "500+ 5 star reviewed movies"); 
-		job.setJarByClass(JoinRatings.class); 
-		job.setMapperClass(JoinRatings.TokenizerMapperA.class); 
-		job.setReducerClass(JoinRatings.CountReducer.class); 
+		job.setJarByClass(MineFreqItems.class); 
+		job.setMapperClass(MineFreqItems.TokenizerMapperA.class); 
+		job.setReducerClass(MineFreqItems.CountReducer.class); 
 		job.setNumReduceTasks(1); 
 		job.setMapOutputKeyClass(Text.class); 
 		job.setMapOutputValueClass(IntWritable.class); 
@@ -130,6 +130,4 @@ public class JoinRatings extends Configured implements Tool {
 		FileOutputFormat.setOutputPath(job, new Path(args[3])); 
 		return job.waitForCompletion(true) ? 0 : 1;
    	}
-		
-	 
 }
