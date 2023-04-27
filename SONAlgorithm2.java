@@ -69,7 +69,7 @@ public class SONAlgorithm2 extends Configured implements Tool {
 
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            // value contains a subset of playlists with N lines
+            // value contains a subset of playlists with 1000 lines
             List<String> playlists = Arrays.asList(value.toString().split("\\n"));
 
             Set<String> frequentItemsets = findFrequentItemsets(playlists);
@@ -137,8 +137,7 @@ public class SONAlgorithm2 extends Configured implements Tool {
         @Override
         protected void setup(Context context) throws IOException, InterruptedException {
             super.setup(context);
-            // Load candidate itemsets from the distributed cache (output of the first
-            // phase)
+            // Load candidate itemsets from the distributed cache (output of the first phase)
             candidateItemsets = loadCandidateItemsets(context.getConfiguration());
         }
 
@@ -157,7 +156,6 @@ public class SONAlgorithm2 extends Configured implements Tool {
                 }
             }
 
-            // Output key-value pairs (C, v)
             for (Map.Entry<String, Integer> entry : songPairCounts.entrySet()) {
                 songPair.set(entry.getKey());
                 count.set(entry.getValue());
@@ -224,7 +222,7 @@ public class SONAlgorithm2 extends Configured implements Tool {
 
         Configuration conf = this.getConf();
 
-        // //JOB 1
+        // //JOB 1 (comment this out on second run)
         // Job job = Job.getInstance(conf, "SON Algorithm Phase 1");
         // job.setJarByClass(SONAlgorithm2.class);
 
@@ -245,7 +243,7 @@ public class SONAlgorithm2 extends Configured implements Tool {
 
         // return job.waitForCompletion(true) ? 0 : 1;
 
-        //JOB 2
+        //JOB 2 (comment this out on first run)
         DistributedCache.addCacheFile(new URI("/Capstone/output/part-r-00000"), conf);
     
 
